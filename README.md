@@ -46,6 +46,30 @@ This account exists so visitors can safely explore all features without providin
 - Socket.io (real-time features)
 - Vanilla JavaScript and CSS
 
+## Security
+
+This project is a portfolio prototype, but security-relevant behaviour is handled deliberately in the following areas.
+
+### Session handling
+
+- Authentication uses `express-session` with a server-side session store. The browser only receives an opaque session cookie; user data is kept on the server.
+- Session cookies are configured with `httpOnly` (inaccessible to client-side JavaScript), `sameSite: 'lax'` (mitigates cross-site request forgery), and a seven-day expiry.
+- The session signing secret is supplied through the `SESSION_SECRET` environment variable and is never committed to the repository. A development fallback exists only to simplify local setup.
+- Protected routes are guarded by a `requireLogin` middleware, and owner-only actions (deleting posts, events, and polls) verify ownership before making changes.
+- Socket.io connections reuse the same Express session middleware, so real-time rooms are only joined by authenticated users.
+
+### Input validation
+
+- Request bodies are trimmed and checked for required fields before they reach the database.
+- Mongoose schemas enforce required fields and length limits (for example, comments are capped at 1,000 characters and bios at 500).
+- Uploaded images are restricted to JPEG, PNG, GIF, and WebP, capped at 5 MB, and stored with sanitised filenames. Uploaded files are served from a dedicated directory rather than executed.
+- EJS templates escape rendered values by default, which prevents untrusted content from being interpreted as HTML.
+- Invalid MongoDB identifiers are checked before queries, and malformed requests receive a generic error page instead of internal details.
+
+### Known security limitations
+
+This is not a hardened production deployment. Before real-world use, it should add CSRF tokens, login and request rate limiting, a persistent session store, security headers (for example via Helmet), and automated dependency and security testing. The UserID-only login is intentionally simplified for the demo and is not a substitute for password or federated authentication.
+
 ## Getting Started
 
 ### Prerequisites
@@ -59,7 +83,7 @@ Before running the project locally, make sure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/kebablover23/AAU-Forum.git
+   git clone https://github.com/Zaiim23/AAU-Forum.git
    ```
 
 2. Navigate into the project folder:
@@ -145,7 +169,7 @@ These limitations are acceptable for a demo and portfolio piece, but would need 
 
 ## License
 
-No license has been granted for reuse. The source code is publicly viewable for portfolio and educational review purposes.
+This project is released under the MIT License. See [LICENSE](LICENSE) for the full text.
 
 ---
 
