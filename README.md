@@ -1,24 +1,22 @@
 # AAU Forum
 
-AAU Forum is a real-time discussion platform originally developed as a group project during the 2nd semester of Software Engineering at Aalborg University Copenhagen. After the semester ended, I continued developing the project independently with the group's permission. This repository contains my continued portfolio version.
+AAU Forum is a real-time discussion platform built with Node.js, Express, MongoDB, and Socket.io. It was originally developed as a group project during the 2nd semester of Software Engineering at Aalborg University Copenhagen and was later continued independently with the group's permission. This repository contains the continued version.
 
-The platform brings posts, comments, polls, events, direct messages, notifications, profiles, and dark mode together in one place – designed to reduce fragmented communication between students.
+The application provides posts, comments, polls, events, direct messages, notifications, profiles, and dark mode in a single system.
 
 ## Live Demo
 
 A live version of the application is available at:
 
-🔗 [https://aau-forum.onrender.com](https://aau-forum.onrender.com)
+[https://aau-forum.onrender.com](https://aau-forum.onrender.com)
 
-The demo is hosted on Render's free tier. It stays awake most of the time, but if it has been inactive for a while, the server may need **20–30 seconds** to wake up on the first visit.
+The demo is hosted on Render's free tier. If the instance has been inactive, the first request may take 20–30 seconds while it starts.
 
 ### Test Account
 
-If you do not want to create your own account, you can use the public test account:
-
 - **UserID:** `test`
 
-This account exists so visitors can safely explore all features without providing personal information. Feel free to create posts, events, polls, send messages, and test the notification system. Please keep the content friendly.
+The test account provides access to all features without registration. Content created with this account is public.
 
 ## Features
 
@@ -48,7 +46,7 @@ This account exists so visitors can safely explore all features without providin
 
 ## Security
 
-This project is a portfolio prototype, but security-relevant behaviour is handled deliberately in the following areas.
+This project is a prototype, but security-relevant behaviour is handled explicitly in the following areas.
 
 ### Session handling
 
@@ -56,7 +54,7 @@ This project is a portfolio prototype, but security-relevant behaviour is handle
 - Session cookies are configured with `httpOnly` (inaccessible to client-side JavaScript), `sameSite: 'lax'` (mitigates cross-site request forgery), and a seven-day expiry.
 - The session signing secret is supplied through the `SESSION_SECRET` environment variable and is never committed to the repository. A development fallback exists only to simplify local setup.
 - Protected routes are guarded by a `requireLogin` middleware, and owner-only actions (deleting posts, events, and polls) verify ownership before making changes.
-- Socket.io connections reuse the same Express session middleware, so real-time rooms are only joined by authenticated users.
+- Socket.io connections reuse the same Express session middleware. Conversation rooms can only be joined by authenticated users who are participants in the conversation.
 
 ### Input validation
 
@@ -103,7 +101,7 @@ Before running the project locally, make sure you have the following installed:
    PORT=3000
    ```
 
-   Replace `your_mongodb_connection_string` with your own MongoDB connection string. You can get one for free from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+   Replace `your_mongodb_connection_string` with your own MongoDB connection string. A free connection string is available from [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
 
 5. Start the application:
    ```bash
@@ -119,37 +117,29 @@ npm run dev
 
 ## Project Background
 
-AAU Forum started as a second-semester group project at Aalborg University Copenhagen. The original problem was simple but widespread: students had to use many different platforms to stay informed about events, ask academic questions, and connect with peers. This fragmentation made it difficult to find relevant information and participate in student life.
+AAU Forum originated as a second-semester group project at Aalborg University Copenhagen. The project addressed a common problem: students had to use multiple platforms to stay informed about events, ask academic questions, and connect with peers, which made relevant information difficult to find.
 
-As a group, we researched the problem through surveys, interviews, and design sprints. We then built a working forum as our semester project.
+The group researched the problem through surveys, interviews, and design sprints, then built a working forum as the semester project.
 
-After the course ended, I wanted to take the project further. I received permission from the group to continue working on it independently. The group members have chosen to remain anonymous in this public portfolio version.
+After the course ended, the project was continued independently with the group's permission. Group members are not named in this public repository.
 
-During the summer break before my 3rd semester, I spent time improving the codebase, fixing known issues, adding new features, and making the project something I could be proud to show in a portfolio. This repository is the result of that continued work.
+## Independent Development
 
-## My Contributions
+The later development of this repository includes the following changes:
 
-While the original project was a collaborative effort, this portfolio version includes a large amount of independent work. During my continued development, I:
-
-- Restructured the project from a single folder into a clean MVC-like architecture
-- Removed password authentication and replaced it with UserID-only login
+- Restructured the project from a single folder into an MVC-like architecture
+- Replaced password authentication with UserID-only login
 - Added sessions and user authentication middleware
 - Implemented public user profiles with bio and activity overview
 - Added role selection with options for students, staff, and external partners
-- Built a notification system with Socket.io and clickable dropdown
+- Built a notification system with Socket.io and a clickable dropdown
 - Added real-time messaging, comments, poll votes, and event attendance
 - Implemented dark mode with persistent user preference
 - Added image upload validation and default avatar fallback
 - Added event and poll deletion for owners
-- Fixed numerous bugs discovered during testing
-- Translated the entire user interface to English
+- Fixed bugs discovered during testing
+- Translated the user interface to English
 - Documented the project for public use
-
-This project demonstrates my ability to take an existing codebase, identify weaknesses, and improve it into a solid full-stack application.
-
-## AI-Assisted Development
-
-A small amount of AI assistance was used during the continued development for debugging and guidance. AI tools helped identify issues and suggest improvements, but all changes were manually reviewed and tested before being accepted. The final implementation reflects my own understanding and effort.
 
 ## Privacy
 
@@ -157,7 +147,7 @@ Personal and confidential information has been removed. University reports, proc
 
 ## Known Limitations
 
-This is a prototype. Some limitations include:
+This is a prototype. Current limitations include:
 
 - In-memory session store (sessions reset when the server restarts)
 - Uploaded images are stored on the server filesystem and may not persist between deploys on free hosting
@@ -165,14 +155,6 @@ This is a prototype. Some limitations include:
 - No moderation tools
 - No persistent notification storage across sessions
 
-These limitations are acceptable for a demo and portfolio piece, but would need to be addressed for production use.
-
 ## License
 
 This project is released under the MIT License. See [LICENSE](LICENSE) for the full text.
-
----
-
-Thank you for taking the time to explore AAU Forum. This project represents many hours of learning, debugging, and growth, and I am proud of how far it has come.
-
-Zaiim Islam
