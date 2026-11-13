@@ -6,6 +6,7 @@ const express = require('express');
 const session = require('express-session');
 const { Server } = require('socket.io');
 const connectDatabase = require('./config/database');
+const { Conversation } = require('./models/noteModel');
 const noteRoutes = require('./routes/noteRoutes');
 const { exposeSessionUser } = require('./middleware/auth');
 
@@ -50,7 +51,14 @@ io.on('connection', socket => {
     notifications: app.get('notifications').get(userId) || [],
     count: app.get('notificationCounts').get(userId) || 0
   });
-  socket.on('conversation:join', id => socket.join(`conversation:${id}`));
+  socket.on('conversation:join', async id => {
+    try {
+      const conversation = await Conversation.findOne({ _id: id, participants: userId });
+      if (conversation) socket.join(`conversation:${id}`);
+    } catch (err) {
+      console.error('Socket join error:', err.message);
+    }
+  });
   socket.on('post:join', id => socket.join(`post:${id}`));
   socket.on('event:join', id => socket.join(`event:${id}`));
   socket.on('poll:join', id => socket.join(`poll:${id}`));
