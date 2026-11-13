@@ -25,7 +25,19 @@ body.dark-mode {
 }
 
 * { box-sizing: border-box; }
-html { min-height: 100%; }
+
+html {
+  min-height: 100%;
+  background-color: var(--bg);
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font: 15px/1.5 Arial, sans-serif; transition: background .25s ease, color .25s ease; }
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
@@ -40,7 +52,7 @@ button, .button { cursor: pointer; }
 .brand span { display: grid; gap: 1px; }
 .brand strong { font-size: 18px; }
 .brand small { color: var(--muted); font-size: 11px; }
-.search-wrap { flex: 1; max-width: 620px; }
+.search-wrap { flex: 1; max-width: 620px; min-width: 0; }
 .search { width: 100%; padding: 11px 16px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-muted); color: var(--text); outline: none; }
 .search:focus { border-color: var(--accent); }
 .header-actions { display: flex; align-items: center; gap: 16px; margin-left: auto; }
@@ -139,6 +151,7 @@ button, .button { cursor: pointer; }
 .auth-main { display: grid; place-items: center; min-height: calc(100vh - 150px); width: min(100% - 48px, 520px); margin: auto; padding: 40px 0; }
 .auth-page .sidebar { display: none; }
 .auth-page .site-header { position: static; }
+.auth-page .site-footer { margin-left: 0; }
 
 .messages-layout { display: grid; grid-template-columns: 290px 1fr; width: calc(100% - 238px - 48px); max-width: 1100px; height: calc(100vh - 136px); margin: 30px 0 30px 238px; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); }
 .conversation-panel { min-width: 0; border-right: 1px solid var(--border); }
