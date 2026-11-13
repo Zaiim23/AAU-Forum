@@ -296,7 +296,8 @@ exports.addComment = async (req, res) => {
 
 exports.deleteComment = async (req, res) => {
   try {
-    const Model = req.body.itemType === 'event' ? Event : tPost;
+    const Model = req.body.itemType === 'event' ? Event : req.body.itemType === 'post' ? tPost : null;
+    if (!Model) return res.status(400).send('Invalid item type');
     const item = await Model.findById(req.body.itemId);
     const comment = item?.comments.id(req.body.commentId);
     if (!comment) return res.redirect(req.body.redirectTo || '/');
